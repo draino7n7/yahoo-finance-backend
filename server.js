@@ -1,10 +1,9 @@
 const express = require('express');
 const cors = require('cors');
 const yahooFinance = require('yahoo-finance2').default;
-require('dotenv').config(); // Load environment variables from .env file
 
 const app = express();
-const port = process.env.PORT || 3000;
+const port = 3000; // Hardcoded port value
 
 app.use(cors());
 
