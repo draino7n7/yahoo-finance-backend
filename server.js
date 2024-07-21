@@ -7,6 +7,11 @@ const port = process.env.PORT || 3000;
 
 app.use(cors());
 
+// Root route
+app.get('/', (req, res) => {
+    res.send('Hello, this is the Yahoo Finance API server.');
+});
+
 app.get('/api/bitcoin', async (req, res) => {
     try {
         const btc = yfinance('BTC-USD');
