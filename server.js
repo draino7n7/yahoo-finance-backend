@@ -22,6 +22,16 @@ app.get('/api/bitcoin', async (req, res) => {
     }
 });
 
+app.get('/api/bitcoin/current', async (req, res) => {
+    try {
+        const btc = await yfinance.quote('BTC-USD');
+        const currentPrice = btc.regularMarketPrice;
+        res.json({ currentPrice });
+    } catch (error) {
+        res.status(500).send(error.message);
+    }
+});
+
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
 });
