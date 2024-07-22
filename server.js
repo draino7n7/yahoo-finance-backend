@@ -16,19 +16,24 @@ app.get('/', (req, res) => {
 // Endpoint to fetch Bitcoin historical data from Yahoo Finance
 app.get('/api/bitcoin/historical', async (req, res) => {
     try {
+        const { start, end, interval } = req.query;
+
         // Default values
         const defaultStart = new Date(new Date().setDate(new Date().getDate() - 1)).toISOString().split('T')[0];
         const defaultEnd = new Date().toISOString().split('T')[0];
         const defaultInterval = '1h';
-        
-        // Get query parameters
-        const start = req.query.start || defaultStart;
-        const end = req.query.end || defaultEnd;
-        const interval = req.query.interval || defaultInterval;
+
+        const period1 = start || defaultStart;
+        const period2 = end || defaultEnd;
+        const chosenInterval = interval || defaultInterval;
 
         // Fetch historical data
-        const btcHistory = await yahooFinance.historical('BTC-USD', { period1: start, period2: end, interval: interval });
-        
+        const btcHistory = await yahooFinance.historical('BTC-USD', {
+            period1,
+            period2,
+            interval: chosenInterval
+        });
+
         res.json(btcHistory);
     } catch (error) {
         res.status(500).send(error.message);
